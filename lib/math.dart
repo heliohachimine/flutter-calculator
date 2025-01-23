@@ -17,6 +17,7 @@ abstract class MathBase with Store {
 
   @action
   void cleanDisplay() {
+    firstValue = 0.0;
     display = '0';
   }
 
@@ -32,7 +33,11 @@ abstract class MathBase with Store {
   @action
   void setOperation(Operation operation) {
     this.operation = operation;
-    firstValue = double.parse(display.replaceAll('.', '').replaceAll(',', '.'));
+    final displayValue = double.parse(
+      display.replaceAll('.', '').replaceAll(',', '.'),
+    );
+    final roundedValue = displayValue.toStringAsFixed(15);
+    firstValue = double.parse(roundedValue);
     display = '0';
   }
 
@@ -47,7 +52,11 @@ abstract class MathBase with Store {
 
   @action
   void percent() {
-    final value = double.parse(display);
+    final displayValue = double.parse(
+      display.replaceAll('.', '').replaceAll(',', '.'),
+    );
+    final roundedValue = displayValue.toStringAsFixed(15);
+    final value = double.parse(roundedValue);
     display = (value / 100).formatBr();
   }
 
@@ -60,10 +69,11 @@ abstract class MathBase with Store {
 
   @action
   void calculate() {
-    if(operation == null || firstValue == null) {
+    if (operation == null || firstValue == null) {
       return;
     }
-    final secondValue = double.parse(display);
+    final secondValue =
+        double.parse(display.replaceAll('.', '').replaceAll(',', '.'));
     switch (operation) {
       case Operation.add:
         display = (firstValue! + secondValue).formatBr();
