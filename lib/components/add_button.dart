@@ -10,6 +10,7 @@ class AddButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
+
       child: InkWell(
         onTap: () {
           _math.setOperation(Operation.add);
